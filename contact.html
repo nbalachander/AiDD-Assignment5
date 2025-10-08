@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Nithya Balachander • Contact</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header><h1>Contact Me!</h1></header>
+    <nav>
+      <a href="index.html"> Home</a> | <a href="about.html"> About Me</a> |
+      <a href="resume.html"> Resume</a> | <a href="project.html"> Projects</a> |
+      <a class="active" href="contact.html"> Contact</a>
+    </nav>
+    <main>
+      <section class="contact-section">
+        <h3>Here are some ways to reach me</h3>
+        <ul class="contact-links">
+          <li>
+            LinkedIn:
+            <a
+              href="https://www.linkedin.com/in/nithyabalachander/"
+              target="_blank"
+              >LinkedIn</a
+            >
+          </li>
+          <li>
+            GitHub:
+            <a href="https://github.com/nbalachander" target="_blank">GitHub</a>
+          </li>
+        </ul>
+        <p class="contact-form-intro">
+          Please fill out the following form to send me your contact info!
+        </p>
+        <form class="contact-form" id="mainContactForm" novalidate>
+          <div class="form-row">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required aria-describedby="firstNameError" aria-invalid="false" autocomplete="given-name" />
+            <span class="error" id="firstNameError" aria-live="polite"></span>
+          </div>
+          <div class="form-row">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required aria-describedby="lastNameError" aria-invalid="false" autocomplete="family-name" />
+            <span class="error" id="lastNameError" aria-live="polite"></span>
+          </div>
+          <div class="form-row">
+            <label for="emailAddress">Email Address</label>
+            <input
+              type="email"
+              id="emailAddress"
+              name="emailAddress"
+              required
+              pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+              aria-describedby="emailError"
+              aria-invalid="false"
+              autocomplete="email"
+            />
+            <span class="error" id="emailError" aria-live="polite"></span>
+          </div>
+          <div class="form-row">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              minlength="8"
+              aria-describedby="passwordError"
+              aria-invalid="false"
+              autocomplete="new-password"
+            />
+            <span class="error" id="passwordError" aria-live="polite"></span>
+          </div>
+          <div class="form-row">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              required
+              minlength="8"
+              aria-describedby="confirmPasswordError"
+              aria-invalid="false"
+              autocomplete="new-password"
+            />
+            <span class="error" id="confirmPasswordError" aria-live="polite"></span>
+          </div>
+          <div class="form-row">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required aria-describedby="messageError" aria-invalid="false"></textarea>
+            <span class="error" id="messageError" aria-live="polite"></span>
+          </div>
+          <div class="form-row">
+            <button type="submit">Send Message</button>
+          </div>
+        </form>
+        <script>
+          document
+            .getElementById("mainContactForm")
+            .addEventListener("submit", function (e) {
+              let valid = true;
+              // Clear previous errors
+              document
+                .querySelectorAll(".error")
+                .forEach((el) => (el.textContent = ""));
+              // Reset aria-invalid
+              [this.firstName, this.lastName, this.emailAddress, this.password, this.confirmPassword, this.message].forEach((el) => {
+                if (el) el.setAttribute("aria-invalid", "false");
+              });
+              // First Name
+              if (!this.firstName.value.trim()) {
+                document.getElementById("firstNameError").textContent =
+                  "First name is required.";
+                this.firstName.setAttribute("aria-invalid", "true");
+                valid = false;
+              }
+              // Last Name
+              if (!this.lastName.value.trim()) {
+                document.getElementById("lastNameError").textContent =
+                  "Last name is required.";
+                this.lastName.setAttribute("aria-invalid", "true");
+                valid = false;
+              }
+              // Email
+              const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+              if (!this.emailAddress.value.trim()) {
+                document.getElementById("emailError").textContent =
+                  "Email address is required.";
+                this.emailAddress.setAttribute("aria-invalid", "true");
+                valid = false;
+              } else if (!emailPattern.test(this.emailAddress.value)) {
+                document.getElementById("emailError").textContent =
+                  "Please enter a valid email address.";
+                this.emailAddress.setAttribute("aria-invalid", "true");
+                valid = false;
+              }
+              // Password
+              if (!this.password.value) {
+                document.getElementById("passwordError").textContent =
+                  "Password is required.";
+                this.password.setAttribute("aria-invalid", "true");
+                valid = false;
+              } else if (this.password.value.length < 8) {
+                document.getElementById("passwordError").textContent =
+                  "Password must be at least 8 characters.";
+                this.password.setAttribute("aria-invalid", "true");
+                valid = false;
+              }
+              // Confirm Password
+              if (!this.confirmPassword.value) {
+                document.getElementById("confirmPasswordError").textContent =
+                  "Please confirm your password.";
+                this.confirmPassword.setAttribute("aria-invalid", "true");
+                valid = false;
+              } else if (this.confirmPassword.value !== this.password.value) {
+                document.getElementById("confirmPasswordError").textContent =
+                  "Passwords do not match.";
+                this.confirmPassword.setAttribute("aria-invalid", "true");
+                valid = false;
+              }
+              // Message
+              if (!this.message.value.trim()) {
+                document.getElementById("messageError").textContent =
+                  "Message is required.";
+                this.message.setAttribute("aria-invalid", "true");
+                valid = false;
+              }
+              if (!valid) {
+                e.preventDefault();
+                return false;
+              }
+              // Redirect to thank you page
+              e.preventDefault();
+              window.location.href = "thankyou.html";
+            });
+        </script>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p>&copy; <span id="year">2025</span> Nithya Balachander. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
